@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<constant name="struts.action.extension" value="do,action" />
+	<constant name="struts.enable.DynamicMethodInnovation" value="false" />
+
+	<package name="itcast" namespace="/test" extends="struts-default">
+
+		<interceptors>
+			<interceptor name="permission"
+				class="cn.itcast.intercepter.PermissionIntercepter">
+			</interceptor>
+			<interceptor-stack name="permissionStack">
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+				<interceptor-ref name="permission" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="permissionStack"/>
+
+		<global-results>
+			<result name="massage">/WEB-INF/page/message.jsp</result>
+		</global-results>
+
+		<action name="list_*" class="cn.itcast.action.HelloWorldAction"
+			method="{1}">
+			<interceptor-ref name="permissionStack" />
+			<interceptor-ref name="xxxx" />
+		</action>
+		
+<!---->
+		<!-- <action name="helloworld_*" class="cn.itcast.action.HelloWorldAction" -->
+		<!-- method="{1}"> -->
+		<!-- <param name="savePath" >/images</param> -->
+		<!-- <result name="success">/WEB-INF/page/hello.jsp</result> -->
+		<!-- </action> -->
+
+
+		<!-- <action name="redirect" class="xxxxx"> <result type="redirecct">/ss.jsp</result> 
+			</action> <action name="redirectAction"> <result type="redirectAction"> <param 
+			name="actionName">xxxx</param> <param name="namespace">/yyyyy</param> </result> 
+			</action> <action name="plainText"> <result type="plainText"> <param name="location">/index.jsp</param> 
+			<param name="charSet">utf-8</param> </result> </action> -->
+	</package>
+
+
+</struts>
